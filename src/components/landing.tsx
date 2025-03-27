@@ -1,13 +1,10 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { useEffect, useState } from "react"
 import Footer from "@/components/footer"
-import img1 from "img1.jpg"
-import img2 from "img2.jpg"
-
+import Image from "next/image"
 
 export default function LandingPage() {
   const [hours, setHours] = useState(23)
@@ -48,7 +45,7 @@ export default function LandingPage() {
       {/* Header */}
       <header className="container mx-auto py-4 px-4 flex justify-between items-center">
         <div className="text-[#d1ff32] text-2xl font-horizon hover:scale-110 transition-transform duration-300 cursor-pointer">
-          EVENT<span className="text-[#8a5cf6]">X</span>
+          HAPPENIN<span className="text-[#8a5cf6]">G</span>
         </div>
         <nav className="hidden md:flex space-x-8">
           {["HOME", "EVENTS", "SCHEDULE", "VENUE"].map((item, index) => (
@@ -83,20 +80,20 @@ export default function LandingPage() {
           <h1 className="text-5xl md:text-6xl font-horizon mb-4 hover:text-[#d1ff32] transition-colors duration-300">
             BOOK{" "}
             <span className="inline-block align-middle mx-2 animate-pulse">
-            <Image 
-        src="/img1.jpg" 
-        alt="Ticket" 
-        width={80} 
-        height={80} 
-        className="inline-block" 
-      />
+              <Image 
+                src="/img1.png" 
+                alt="Ticket" 
+                width={80} 
+                height={80} 
+                className="inline-block" 
+              />
             </span>{" "}
             AND EXPLORE
           </h1>
           <h2 className="text-5xl md:text-6xl font-horizon hover:text-[#d1ff32] transition-colors duration-300">
             UPCOMING{" "}
             <span className="inline-block align-middle mx-2 animate-bounce">
-              <Image src="/images/arrow-icon.png" alt="Arrow" width={80} height={80} className="inline-block" />
+              <Image src="/img2.png" alt="Arrow" width={80} height={80} className="inline-block" />
             </span>{" "}
             EVENTS
           </h2>
@@ -122,10 +119,10 @@ export default function LandingPage() {
               </div>
               <div className="flex items-center justify-center relative">
                 <div className="animate-spin-slow absolute">
-                  <Image src="/images/play-outer.png" alt="Play Button Outer" width={200} height={200} />
+                  <Image src="/img4.png" alt="Play Button Outer" width={150} height={150} />
                 </div>
                 <div className="absolute">
-                  <Image src="/images/play-inner.png" alt="Play Button Inner" width={100} height={100} />
+                  <Image src="/img5.png" alt="Play Button Inner" width={100} height={100} />
                 </div>
               </div>
             </div>
@@ -156,7 +153,7 @@ export default function LandingPage() {
                 </div>
                 <div className="flex items-center">
                   <div className="bg-white p-2 rounded-lg hover:rotate-3 transition-transform duration-300">
-                    <Image src={qrCodeUrl || "/placeholder.svg"} alt="QR Code" width={60} height={60} />
+                    <Image src={qrCodeUrl} alt="QR Code" width={60} height={60} />
                   </div>
                   <div className="text-xs ml-2 font-montserrat">
                     <div className="animate-pulse">GET YOURS!</div>
@@ -166,7 +163,7 @@ export default function LandingPage() {
 
               {/* Book Button */}
               <button className="w-full bg-[#d1ff32] text-black py-3 px-6 rounded-full flex items-center justify-between hover:bg-[#e2ff6a] transition-colors duration-300 group">
-                <span className="font-horizon">Book Your Seat for EVENTX</span>
+                <span className="font-horizon">Make Your Event come True</span>
                 <div className="w-8 h-8 bg-[#8a5cf6] rounded-full flex items-center justify-center group-hover:bg-[#9d74f7] transition-colors duration-300">
                   <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform duration-300" />
                 </div>
@@ -194,7 +191,7 @@ export default function LandingPage() {
           </div>
           <div className="flex justify-center">
             <Image
-              src="/images/neon-ticket.png"
+              src="/img3.png"
               alt="Neon Ticket"
               width={300}
               height={300}
@@ -209,4 +206,3 @@ export default function LandingPage() {
     </div>
   )
 }
-

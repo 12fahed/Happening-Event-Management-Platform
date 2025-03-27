@@ -8,7 +8,8 @@ export default function TestPage(){
   return(
     <div>
       {/* This is a Test Page */}
-      <EventDetails />
+      {/* <EventDetails /> */}
+      <LandingPage />
     </div>
   )
 
