@@ -78,7 +78,7 @@ export default function LandingPage() {
         {/* Hero Section */}
         <div className="text-center mb-16 animate-fadeIn">
           <h1 className="text-5xl md:text-6xl font-horizon mb-4 hover:text-[#d1ff32] transition-colors duration-300">
-            BOOK{" "}
+            CREATE{" "}
             <span className="inline-block align-middle mx-2 animate-pulse">
               <Image 
                 src="/img1.png" 
@@ -88,7 +88,7 @@ export default function LandingPage() {
                 className="inline-block" 
               />
             </span>{" "}
-            AND EXPLORE
+            AND PLAN 
           </h1>
           <h2 className="text-5xl md:text-6xl font-horizon hover:text-[#d1ff32] transition-colors duration-300">
             UPCOMING{" "}
