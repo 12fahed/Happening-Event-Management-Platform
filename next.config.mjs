@@ -9,7 +9,7 @@ const nextConfig = {
         port: "",
       },
     ],
-    domains: ['res.cloudinary.com', 'images.unsplash.com'],
+    domains: ['res.cloudinary.com', 'images.unsplash.com', 'api.qrserver.com'],
   },
   webpack: (config) => {
     // Resolve aliases

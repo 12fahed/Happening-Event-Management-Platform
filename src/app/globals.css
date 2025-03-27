@@ -2,16 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ✅ Import Fonts Properly */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/horizon');
+
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
+    --border: 214.3 31.8% 91.4%;
+    --radius: 0.5rem;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --card: var(--background);
+    --card-foreground: var(--foreground);
+    
+    --popover: var(--background);
+    --popover-foreground: var(--foreground);
 
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
@@ -22,18 +28,15 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: var(--muted);
+    --accent-foreground: var(--primary);
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
-    --radius: 0.5rem;
-
+    /* Sidebar */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -47,32 +50,32 @@
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: var(--background);
+    --card-foreground: var(--foreground);
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: var(--background);
+    --popover-foreground: var(--foreground);
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: var(--foreground);
+    --primary-foreground: var(--background);
 
     --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary-foreground: var(--foreground);
 
-    --muted: 217.2 32.6% 17.5%;
+    --muted: var(--secondary);
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: var(--secondary);
+    --accent-foreground: var(--foreground);
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: var(--foreground);
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
 
+    /* Sidebar */
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 0 0% 98%;
@@ -84,6 +87,7 @@
   }
 }
 
+/* ✅ Apply Global Styles */
 @layer base {
   * {
     @apply border-border;
@@ -93,15 +97,60 @@
   }
 }
 
-.shadow-box {
-  box-shadow: 0 0 10px rgba(129, 126, 126, 0.554); /* Replace rgba(0, 0, 0, 0.1) with your desired shadow color */
+/* ✅ Font Classes */
+.font-horizon {
+  font-family: "HORIZON", sans-serif;
+  letter-spacing: 0.05em;
 }
 
+.font-montserrat {
+  font-family: "Montserrat", sans-serif;
+}
+
+/* ✅ Scrollbar Removal */
 .remove-scroller {
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  -ms-overflow-style: none; /* Internet Explorer */
   scrollbar-width: none; /* Firefox */
 }
-
 .remove-scroller::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
+  display: none; /* Chrome, Safari */
+}
+
+/* ✅ Box Shadow */
+.shadow-box {
+  box-shadow: 0 0 10px rgba(129, 126, 126, 0.554);
+}
+
+/* ✅ Animations */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 10s linear infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(12deg); }
+  50% { transform: translateY(-10px) rotate(8deg); }
+  100% { transform: translateY(0px) rotate(12deg); }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 1s ease-out;
+}
+
+@keyframes glow {
+  0%, 100% { text-shadow: 0 0 5px rgba(209, 255, 50, 0.3); }
+  50% { text-shadow: 0 0 20px rgba(209, 255, 50, 0.7); }
+}
+.animate-glow {
+  animation: glow 3s infinite;
 }
