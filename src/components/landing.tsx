@@ -181,7 +181,7 @@ export default function LandingPage() {
               THE EVENT
             </h2>
             <p className="text-sm text-gray-300 mb-6 font-montserrat">
-              Once you've found an event you're interested in, you can view all the details and information you need,
+              Once you&apos;ve found an event you@aposre interested in, you can view all the details and information you need,
               including the event date, time, location, lineup, speakers, and agenda.
             </p>
             <button className="bg-[#8a5cf6] text-white py-3 px-8 rounded-full flex items-center hover:bg-[#9d74f7] transition-colors duration-300 group">

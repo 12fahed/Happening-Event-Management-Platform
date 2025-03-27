@@ -13,7 +13,7 @@ export default function Footer() {
             <h3 className="text-[#d1ff32] font-horizon text-xl mb-4">ABOUT US</h3>
             <p className="text-gray-300 font-montserrat text-sm mb-4">
               EventX is the ultimate platform for discovering and booking the hottest events in your area. From concerts
-              to conferences, we've got you covered.
+              to conferences, we@aposve got you covered.
             </p>
             <div className="flex space-x-3">
               {[Facebook, Twitter, Instagram, Youtube].map((Icon, index) => (

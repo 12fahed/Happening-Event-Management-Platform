@@ -156,3 +156,171 @@
 .animate-glow {
   animation: glow 3s infinite;
 }
+
+
+/* Animation styles */
+.animation-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+}
+
+.animation-container.active {
+  transform: scale(1.05);
+}
+
+/* Background circles */
+.circle-bg {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.2;
+  background: linear-gradient(135deg, #4ade80, #22c55e);
+}
+
+.circle-1 {
+  width: 220px;
+  height: 220px;
+  animation: pulse 2s infinite alternate;
+}
+
+.circle-2 {
+  width: 180px;
+  height: 180px;
+  animation: pulse 2s infinite alternate 0.3s;
+}
+
+.circle-3 {
+  width: 140px;
+  height: 140px;
+  animation: pulse 2s infinite alternate 0.6s;
+}
+
+/* Main circle with segments */
+.main-circle {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: rotate 20s linear infinite;
+}
+
+.animation-container.active .main-circle {
+  animation-duration: 10s; /* Faster rotation when active */
+}
+
+/* Segments */
+.segment {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 33%);
+  background: linear-gradient(135deg, #4ade80, #22c55e);
+  opacity: 0.7;
+  transform-origin: center;
+}
+
+.segment-1 {
+  transform: rotate(0deg);
+}
+.segment-2 {
+  transform: rotate(60deg);
+}
+.segment-3 {
+  transform: rotate(120deg);
+}
+.segment-4 {
+  transform: rotate(180deg);
+}
+.segment-5 {
+  transform: rotate(240deg);
+}
+.segment-6 {
+  transform: rotate(300deg);
+}
+
+.animation-container.active .segment {
+  animation: pulse-segment 1.5s infinite alternate;
+}
+
+.segment-1 {
+  animation-delay: 0s;
+}
+.segment-2 {
+  animation-delay: 0.25s;
+}
+.segment-3 {
+  animation-delay: 0.5s;
+}
+.segment-4 {
+  animation-delay: 0.75s;
+}
+.segment-5 {
+  animation-delay: 1s;
+}
+.segment-6 {
+  animation-delay: 1.25s;
+}
+
+/* Center button */
+.center-button {
+  position: absolute;
+  z-index: 10;
+  background: white;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+}
+
+@keyframes pulse-segment {
+  0% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Speaking animation */
+.animation-container.active.speaking .segment {
+  animation: pulse-speaking 0.8s infinite alternate;
+}
+
+@keyframes pulse-speaking {
+  0% {
+    opacity: 0.6;
+    transform-origin: center;
+    transform: rotate(var(--rotation)) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform-origin: center;
+    transform: rotate(var(--rotation)) scale(1.05);
+  }
+}
