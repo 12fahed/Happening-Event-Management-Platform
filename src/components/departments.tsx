@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Check, ArrowLeft, Sparkles, Star, ArrowRight } from "lucide-react"
 import { useRouter } from "next/navigation"
 
-// Enhanced department list with better icons
 const allDepartments = [
   {
     name: "Marketing",
@@ -49,7 +48,6 @@ const allDepartments = [
   },
 ]
 
-// Enhanced SVG icons with more attractive styling
 const departmentIcons: Record<string, JSX.Element> = {
   marketing: (
     <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -154,21 +152,27 @@ export default function DepartmentsPage() {
   const [selected, setSelected] = useState<string[]>([])
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
-  // Track mouse position for glow effect
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY })
     }
-
     window.addEventListener("mousemove", handleMouseMove)
     return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
 
   const toggleDepartment = (department: string) => {
-    setSelected((prev) => (prev.includes(department) ? prev.filter((d) => d !== department) : [...prev, department]))
+    setSelected((prev) => 
+      prev.includes(department) 
+        ? prev.filter((d) => d !== department) 
+        : [...prev, department]
+    )
   }
 
-  // Animation variants for staggered entrance
+  const handleContinue = () => {
+    localStorage.setItem("selectedDepartments", JSON.stringify(selected))
+    router.push("/selected-departments")
+  }
+
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -186,7 +190,6 @@ export default function DepartmentsPage() {
 
   return (
     <div className="min-h-screen bg-[#1a1a2e] text-white relative overflow-hidden">
-      {/* Floating particles */}
       {[...Array(15)].map((_, i) => (
         <motion.div
           key={i}
@@ -208,7 +211,6 @@ export default function DepartmentsPage() {
         />
       ))}
 
-      {/* Cursor glow effect */}
       <motion.div
         className="fixed w-64 h-64 rounded-full bg-[#DFFF60] opacity-10 pointer-events-none blur-3xl"
         style={{
@@ -296,7 +298,6 @@ export default function DepartmentsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {/* Background decorative elements */}
           <motion.div
             className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-[#DFFF60] opacity-5 blur-3xl"
             animate={{
@@ -352,7 +353,7 @@ export default function DepartmentsPage() {
                 <Sparkles className="w-6 h-6" />
               </motion.div>
             </h2>
-            <div className="w-[100px]"></div> {/* Spacer for centering */}
+            <div className="w-[100px]"></div>
           </div>
 
           <motion.div
@@ -361,7 +362,7 @@ export default function DepartmentsPage() {
             initial="hidden"
             animate="show"
           >
-            {allDepartments.map((dept, index) => {
+            {allDepartments.map((dept) => {
               const isSelected = selected.includes(dept.name)
               return (
                 <motion.div
@@ -411,6 +412,7 @@ export default function DepartmentsPage() {
                     >
                       {departmentIcons[dept.icon]}
                     </motion.div>
+
                     <div>
                       <h3 className={`text-xl font-horizon font-bold ${isSelected ? "text-[#DFFF60]" : "text-white"}`}>
                         {dept.name}
@@ -456,16 +458,19 @@ export default function DepartmentsPage() {
             transition={{ duration: 0.5, delay: 0.8 }}
           >
             <motion.button
-              onClick={() => console.log("Selected departments:", selected)}
-              className="bg-[#DFFF60] text-[#1a1a2e] px-8 py-3 rounded-full font-bold font-horizon flex items-center gap-2 transition-all"
-              whileHover={{
+              onClick={handleContinue}
+              disabled={selected.length === 0}
+              className={`bg-[#DFFF60] text-[#1a1a2e] px-8 py-3 rounded-full font-bold font-horizon flex items-center gap-2 transition-all ${
+                selected.length === 0 ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              whileHover={selected.length === 0 ? {} : {
                 scale: 1.05,
                 boxShadow: "0 0 20px rgba(223, 255, 96, 0.4)",
                 backgroundColor: "#EEFF9D",
               }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={selected.length === 0 ? {} : { scale: 0.95 }}
               animate={{
-                boxShadow: [
+                boxShadow: selected.length === 0 ? "none" : [
                   "0 0 10px rgba(223, 255, 96, 0.2)",
                   "0 0 20px rgba(223, 255, 96, 0.4)",
                   "0 0 10px rgba(223, 255, 96, 0.2)",
@@ -490,4 +495,3 @@ export default function DepartmentsPage() {
     </div>
   )
 }
-
