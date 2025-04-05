@@ -9,6 +9,7 @@ const nextConfig = {
         port: "",
       },
     ],
+    unoptimized: true,
     domains: ['res.cloudinary.com', 'images.unsplash.com', 'api.qrserver.com'],
   },
   webpack: (config) => {
