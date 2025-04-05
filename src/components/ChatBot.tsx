@@ -1,35 +1,34 @@
-import { useState } from 'react';
+"use client";
 
+import { useState, useEffect } from "react";
 import {
   Webchat,
   WebchatProvider,
-  Fab,
   getClient,
   Configuration,
-} from '@botpress/webchat';
+} from "@botpress/webchat";
 
 const clientId = "1d20a3a8-78d8-47bf-a7a1-6f34c9f91c90";
 
 const configuration: Configuration = {
-  color: '#d6ff42',
+  color: "#d6ff42",
 };
 
 export default function App() {
-  const client = getClient({
-    clientId,
-  });
+  const [client, setClient] = useState<any>(null); // ← Use `any` or let TS infer
 
-  const [isWebchatOpen, setIsWebchatOpen] = useState(false);
+  useEffect(() => {
+    const createdClient = getClient({ clientId });
+    setClient(createdClient);
+  }, []);
 
-  const toggleWebchat = () => {
-    setIsWebchatOpen((prevState) => !prevState);
-  };
+  if (!client) return null; // Or a loading state/spinner
 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div style={{ width: "100vw", height: "100vh" }}>
       <WebchatProvider client={client} configuration={configuration}>
-           <Webchat />
+        <Webchat />
       </WebchatProvider>
-</div>
-);
+    </div>
+  );
 }

@@ -5,7 +5,7 @@ import LandingPage from "@/components/landing"
 import EventDetails from "@/components/EventDetails"
 import SelectedDepartments from "@/components/selectedDepartments"
 import Departments from "@/components/departments"
-import ChatBot from "@/components/ChatBot"
+// import ChatBot from "@/components/ChatBot"
 
 export default function TestPage(){
 
@@ -16,7 +16,7 @@ export default function TestPage(){
       {/* <LandingPage /> */}
       {/* <Departments /> */}
       <SelectedDepartments />
-      <ChatBot />
+      {/* <ChatBot /> */}
 
     </div>
   )
