@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Check, ArrowRight, Sparkles, Star } from "lucide-react"
 import EventForm from "@/components/EventForm"
 import { useRouter } from "next/navigation"
+import Cookies from "js-cookie"
 
 // Expanded keyword list with at least 60 options
 const eventCategories = {
@@ -104,6 +105,16 @@ export default function EventDetails() {
   const [showForm, setShowForm] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
+    // Load selected keywords from cookies on initial render
+    useEffect(() => {
+      const savedKeywords = Cookies.get("selectedKeywords")
+      if (savedKeywords) {
+        setSelected(JSON.parse(savedKeywords))
+      }
+    }, [])
+
+    
+
   // Track mouse position for glow effect
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -114,15 +125,50 @@ export default function EventDetails() {
     return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
 
+  // const toggleKeyword = (keyword: string) => {
+  //   setSelected((prev) => (prev.includes(keyword) ? prev.filter((k) => k !== keyword) : [...prev, keyword]))
+  // }
+
   const toggleKeyword = (keyword: string) => {
-    setSelected((prev) => (prev.includes(keyword) ? prev.filter((k) => k !== keyword) : [...prev, keyword]))
+    setSelected((prev) => {
+      const updated = prev.includes(keyword)
+        ? prev.filter((k) => k !== keyword)
+        : [...prev, keyword]
+
+      // Save selected keywords to cookies after each change
+      Cookies.set("selectedKeywords", JSON.stringify(updated), { expires: 7 }) // Expires in 7 days
+      return updated
+    })
   }
+
+  // const handleContinue = (formData: any) => {
+  //   console.log("Selected keywords:", selected)
+  //   console.log("Form data:", formData)
+  //   router.push("/postlogin/departments")
+  // }
+
+  // const handleContinue = (formData: any) => {
+  //   console.log("Selected keywords:", selected)
+  //   console.log("Form data:", formData)
+
+  //   // Save form data to cookies before redirecting
+  //   Cookies.set("formData", JSON.stringify(formData), { expires: 7 })
+    
+  //   router.push("/postlogin/departments")
+  // }
 
   const handleContinue = (formData: any) => {
     console.log("Selected keywords:", selected)
     console.log("Form data:", formData)
-    router.push("/departments")
+  
+    // Save selected keywords and form data in localStorage
+    localStorage.setItem("eventKeywords", JSON.stringify(selected))
+    localStorage.setItem("eventFormData", JSON.stringify(formData))
+  
+    // Navigate to the next page
+    router.push("/postlogin/departments")
   }
+  
 
   return (
     <div className="bg-[#1E2132] min-h-screen w-full">

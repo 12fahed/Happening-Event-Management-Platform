@@ -121,19 +121,64 @@
                 </div>
             </div>
         {% endfor %}
-        <div class="text-center mt-4">
-            <button id="continueBtn" class="btn btn-lg continue-btn">
-                Continue <i class="fas fa-arrow-right"></i>
-            </button>
+        <div class="d-flex justify-content-center mt-4">
+            <div class="text-center me-2">
+                <a href="http://127.0.0.1:8010/trends" target="_blank">
+                    <button id="continueBtn" class="btn btn-lg continue-btn">
+                        See Trends <i class="fas fa-arrow-right"></i>
+                    </button>
+                </a>
+            </div>
+            <!-- <div class="text-center ms-2">
+                <a href="http://localhost:3000/postlogin/voice" target="_blank">
+                    <button id="continueBtn" class="btn btn-lg continue-btn">
+                        Contact Sponsors <i class="fas fa-arrow-right"></i>
+                    </button>
+                </a>
+            </div> -->
+
+            <div class="text-center ms-2">
+                <a href="localhost:3000/postlogin/voice" target="_blank">
+                    <button id="contactSponsorsBtn" class="btn btn-lg continue-btn">
+                        Contact Sponsors <i class="fas fa-arrow-right"></i>
+                    </button>
+                </a>
+            </div>
         </div>
-    </div>
+        
+    </div>s
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
+    <!-- <script>
         document.getElementById('continueBtn').addEventListener('click', function() {
             // Redirect to the home page
-            window.location.href = 'http://127.0.0.1:5000';
+            window.location.href = 'http://localhost:3000/postlogin/voice';
+        });
+    </script> -->
+
+    <script>
+        document.getElementById('contactSponsorsBtn').addEventListener('click', function () {
+            fetch('/send_bulk_email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ Sponsorship emails sent successfully!');
+                    window.open('http://localhost:3000/postlogin/voice', '_blank');
+                } else {
+                    alert('❌ Error sending emails. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('⚠️ Failed to send emails. Check console for details.');
+            });
         });
     </script>
+    
 </body>
 </html>

@@ -11,6 +11,12 @@ export default function LandingPage() {
   const [minutes, setMinutes] = useState(4)
   const [seconds, setSeconds] = useState(47)
 
+
+  const handleClick = () => {
+    window.location.href = "/postlogin/eventDetails";
+  };
+
+
   useEffect(() => {
     const timer = setInterval(() => {
       if (seconds > 0) {
@@ -161,13 +167,17 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              {/* Book Button */}
-              <button className="w-full bg-[#d1ff32] text-black py-3 px-6 rounded-full flex items-center justify-between hover:bg-[#e2ff6a] transition-colors duration-300 group">
-                <span className="font-horizon">Make Your Event come True</span>
-                <div className="w-8 h-8 bg-[#8a5cf6] rounded-full flex items-center justify-center group-hover:bg-[#9d74f7] transition-colors duration-300">
-                  <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform duration-300" />
-                </div>
-              </button>
+               {/* Book Button */}
+               <button
+      onClick={handleClick}
+      className="w-full bg-[#d1ff32] text-black py-3 px-6 rounded-full flex items-center justify-between hover:bg-[#e2ff6a] transition-colors duration-300 group"
+    >
+      <span className="font-horizon">Make Your Event Come True</span>
+      <div className="w-8 h-8 bg-[#8a5cf6] rounded-full flex items-center justify-center group-hover:bg-[#9d74f7] transition-colors duration-300">
+        <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform duration-300" />
+      </div>
+    </button>
+  
             </div>
           </div>
         </div>

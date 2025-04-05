@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, Star, Clock, Users, MapPin } from "lucide-react"
 import { useRouter } from "next/navigation"
 import type { JSX } from "react"
 
+
 const departmentDetails = {
   Marketing: {
     icon: "marketing",
@@ -237,8 +238,10 @@ const departmentIcons: Record<string, JSX.Element> = {
 export default function SelectedDepartments() {
   const router = useRouter()
   const [selectedDepartments, setSelectedDepartments] = useState<string[]>([])
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })  
   const [hoveredDept, setHoveredDept] = useState<string | null>(null)
+
+  
 
   useEffect(() => {
     const storedDepts = localStorage.getItem("selectedDepartments")
@@ -409,7 +412,7 @@ export default function SelectedDepartments() {
               transition={{ duration: 0.3 }}
             >
               <ArrowLeft size={20} />
-              <span>Back to Departments</span>
+              <span>Next</span>
             </motion.button>
             <h2 className="text-3xl font-bold text-center relative">
               <motion.span
@@ -571,7 +574,7 @@ export default function SelectedDepartments() {
           transition={{ duration: 0.5, delay: 0.8 }}
         >
           <motion.button
-            onClick={() => router.push("/departments")}
+            onClick={() => router.push("http://127.0.0.1:8010")}
             className="bg-[#DFFF60] text-[#1a1a2e] px-8 py-3 rounded-full font-bold flex items-center gap-2 transition-all"
             whileHover={{
               scale: 1.05,
@@ -594,7 +597,7 @@ export default function SelectedDepartments() {
               },
             }}
           >
-            Back to Departments
+            Plan Ahead
             <motion.div animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}>
               <ArrowRight className="w-5 h-5" />
             </motion.div>

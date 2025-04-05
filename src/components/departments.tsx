@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Check, ArrowLeft, Sparkles, Star, ArrowRight } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { fetchFromGenAI } from "@/lib/genAIClient"
 
 const allDepartments = [
   {
@@ -151,14 +152,21 @@ export default function DepartmentsPage() {
   const router = useRouter()
   const [selected, setSelected] = useState<string[]>([])
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [isLoading, setIsLoading] = useState(true)
+
+  // useEffect(() => {
+  //   const handleMouseMove = (e: MouseEvent) => {
+  //     setMousePosition({ x: e.clientX, y: e.clientY })
+  //   }
+  //   window.addEventListener("mousemove", handleMouseMove)
+  //   return () => window.removeEventListener("mousemove", handleMouseMove)
+  // }, [])
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
+    if (selected.length > 0 && !isLoading) {
+      localStorage.setItem("selectedDepartments", JSON.stringify(selected))
     }
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [])
+  }, [selected, isLoading])
 
   const toggleDepartment = (department: string) => {
     setSelected((prev) => 
@@ -168,9 +176,85 @@ export default function DepartmentsPage() {
     )
   }
 
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY })
+    }
+    window.addEventListener("mousemove", handleMouseMove)
+
+    const loadAndRecommendDepartments = async () => {
+      try {
+        // Load previously selected departments if they exist
+        const savedDepartments = localStorage.getItem("selectedDepartments")
+        if (savedDepartments) {
+          setSelected(JSON.parse(savedDepartments))
+          setIsLoading(false)
+          return
+        }
+
+        // Load event data
+        const eventFormData = JSON.parse(localStorage.getItem("eventFormData") || "{}")
+        const eventKeywords = JSON.parse(localStorage.getItem("eventKeywords") || "[]")
+
+        // Prepare prompt for Gemini AI
+        const schema = {
+          type: "object",
+          properties: {
+            departments: {
+              type: "array",
+              items: { type: "string" }
+            },
+            explanation: { type: "string" }
+          }
+        }
+
+        const prompt = `
+        Based on the following event details, recommend the most appropriate departments needed for organizing this event.
+        Return only the essential departments from the provided list.
+
+        Event Details:
+        - Name: ${eventFormData.eventName || "Not specified"}
+        - Date: ${eventFormData.eventDate || "Not specified"}
+        - Location: ${eventFormData.eventLocation || "Not specified"}
+        - Expected Attendees: ${eventFormData.expectedAttendees || "Not specified"}
+        - Scale: ${eventFormData.eventScale || "Not specified"}
+        - Access: ${eventFormData.eventAccess || "Not specified"}
+        - Ticket Type: ${eventFormData.ticketType || "Not specified"}
+        - Budget: ${eventFormData.budget || "Not specified"}
+        - Keywords: ${eventKeywords.join(", ") || "None"}
+
+        Available Departments:
+        ${allDepartments.map(d => d.name).join(", ")}
+
+        Return the departments as an array and a brief explanation for your selection.
+        `
+
+        // Get AI recommendation
+        const response = await fetchFromGenAI(schema, prompt)
+        if (response.departments && Array.isArray(response.departments)) {
+          setSelected(response.departments)
+          console.log("AI recommended departments:", response.departments)
+          console.log("Explanation:", response.explanation)
+        }
+      } catch (error) {
+        console.error("Error getting department recommendations:", error)
+        // Fallback selection if AI fails
+        setSelected(["Marketing", "Logistics", "Technical"])
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    
+
+    loadAndRecommendDepartments()
+
+    return () => window.removeEventListener("mousemove", handleMouseMove)
+  }, [])
+
   const handleContinue = () => {
     localStorage.setItem("selectedDepartments", JSON.stringify(selected))
-    router.push("/selected-departments")
+    router.push("/postlogin/selectedDept")
   }
 
   const container = {

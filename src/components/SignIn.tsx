@@ -217,7 +217,7 @@ const SignIn: React.FC = () => {
           id="tsparticles"
           particlesLoaded={particlesLoaded}
           options={{
-            background: { color: { value: "#f9f8ff" } },
+            background: { color: { value: "#1E2132" } },
             fpsLimit: 120,
             interactivity: {
               events: {
@@ -233,9 +233,9 @@ const SignIn: React.FC = () => {
               },
             },
             particles: {
-              color: { value: "#000000" },
+              color: { value: "#ffffff" },
               links: {
-                color: "#000000",
+                color: "#ffffff",
                 distance: 150,
                 enable: true,
                 opacity: 0.5,
